@@ -21,6 +21,10 @@ public class DepthChartServiceImpl implements DepthChartService {
         this.leagueMetadataService = leagueMetadataService;
     }
 
+    /**
+     * Adds player to the depth chart.
+     * If the positionDepth is missing the player is added to the end of the depth chart.
+     */
     @Override
     public synchronized void addPlayerToDepthChart(DepthChartKey key,
                                                    Player player,
@@ -60,6 +64,45 @@ public class DepthChartServiceImpl implements DepthChartService {
         depth.add(positionDepth, player);
     }
 
+    /**
+     *  Removes a player from the depth chart for a given position and returns that player
+     *  An empty list should be returned if the player is not listed in the depth chart at that position
+     */
+    @Override
+    public synchronized List<Player> removePlayerFromDepthChart(DepthChartKey key, Player player) {
+        PlayerIndex pi = lookupPlayer(key, player);
+        if (pi == null) {
+            return List.of();
+        }
+
+        Player removed = pi.depth().remove(pi.index());
+        if (pi.depth().isEmpty()) {
+            depthChart.remove(key);
+        }
+
+        return List.of(removed);
+    }
+
+    /**
+     * Returns all backup players for the specified player at a position.
+     */
+    @Override
+    public synchronized List<Player> getBackups(DepthChartKey key, Player player) {
+        PlayerIndex pi = lookupPlayer(key, player);
+        if (pi == null) {
+            return List.of();
+        }
+
+        if (pi.index() + 1 >= pi.depth().size()) {
+            return List.of();
+        }
+
+        return List.copyOf(pi.depth().subList(pi.index() + 1, pi.depth().size()));
+    }
+
+    /**
+     * Returns the full depth chart for a league/team across all positions.
+     */
     @Override
     public synchronized Map<String, List<Player>> getFullDepthChart(String league, String team) {
         String lg = normalizeRequired("league", league);
@@ -79,8 +122,41 @@ public class DepthChartServiceImpl implements DepthChartService {
     }
 
 
+    /**
+     * Look up depth list for given key and find player's index.
+     * Returns null if position not present or player not found.
+     */
+    private PlayerIndex lookupPlayer(DepthChartKey key, Player player) {
+        requireNonNull(key, "key");
+        requireNonNull(player, "player");
+
+        leagueMetadataService.validateLeagueTeamPosition(
+                key.league(), key.team(), key.position());
+
+        List<Player> depth = depthChart.get(key);
+        if (depth == null || depth.isEmpty()) {
+            return null;
+        }
+
+        int index = depth.indexOf(player);
+        if (index == -1) {
+            return null;
+        }
+
+        return new PlayerIndex(depth, index);
+    }
+
+    private record PlayerIndex(List<Player> depth, int index) {}
+
+    // Validations
+
     private void validatePlayer(Player player) {
         requireNonNull(player, "player");
+
+        // Validate number
+        if (player.number() <= 0) {
+            throw new IllegalArgumentException("player.number is required");
+        }
         requireNonBlank(player.name(), "player.name");
     }
 

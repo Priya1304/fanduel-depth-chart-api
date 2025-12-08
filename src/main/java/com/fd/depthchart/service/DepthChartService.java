@@ -10,5 +10,9 @@ public interface DepthChartService {
 
     void addPlayerToDepthChart (DepthChartKey key, Player player, Integer position_depth);
 
+    List<Player> removePlayerFromDepthChart(DepthChartKey key, Player player);
+
+    List<Player> getBackups(DepthChartKey key, Player player);
+
     Map<String, List<Player>> getFullDepthChart(String league, String team);
 }

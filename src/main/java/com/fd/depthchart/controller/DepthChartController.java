@@ -50,7 +50,59 @@ public class DepthChartController {
                         "/api/v1/%s/teams/%s/depth-chart/%s",
                         key.league(), key.team(), key.position()
                 )))
+                .header("X-Correlation-Id", correlationId)
                 .build();
+    }
+
+    @Operation(
+            summary = "Remove a player from a depth chart position",
+            description = "Returns the removed player in a list, or empty list if not present"
+    )
+    @DeleteMapping("/{league}/teams/{team}/depth-chart/{position}")
+    public ResponseEntity<List<Player>> removePlayerFromDepthChart(
+            @Parameter(description = "League code (e.g. NFL)") @PathVariable String league,
+            @Parameter(description = "Team code within the league (e.g. TB)") @PathVariable String team,
+            @Parameter(description = "Position code (e.g. QB)") @PathVariable String position,
+            @RequestBody Player player) {
+
+        String correlationId = UUID.randomUUID().toString();
+        log.info("[{}] Received request for removePlayerFromDepthChart : league={}, team={}",
+                correlationId, league, team);
+
+        DepthChartKey key = DepthChartKey.of(league, team, position);
+
+        List<Player> removed = depthChartService.removePlayerFromDepthChart(key, player);
+
+        return ResponseEntity.ok()
+                .header("X-Correlation-Id", correlationId)
+                .body(removed);
+    }
+
+    @Operation(
+            summary = "Get backups for a player",
+            description = "Returns all players ranked below the given player at the specified position. "
+                    + "If the player is not listed or has no backups, an empty list is returned."
+    )
+    @PostMapping("/{league}/teams/{team}/depth-chart/{position}/backups")
+    public ResponseEntity<List<Player>> getBackups(
+            @Parameter(description = "League code (e.g. NFL)") @PathVariable String league,
+            @Parameter(description = "Team code within the league (e.g. TB)") @PathVariable String team,
+            @Parameter(description = "Position code (e.g. QB)")  @PathVariable String position,
+            @RequestBody Player player) {
+
+        String correlationId = UUID.randomUUID().toString();
+
+        log.info("[{}] Get backups: league={}, team={}, position={}",
+                correlationId, league, team, position);
+
+        DepthChartKey key = DepthChartKey.of(league, team, position);
+
+        List<Player> backups = depthChartService.getBackups(key, player);
+
+
+        return ResponseEntity.ok()
+                .header("X-Correlation-Id", correlationId)
+                .body(backups);
     }
 
     @Operation(
@@ -68,6 +120,8 @@ public class DepthChartController {
         Map<String, List<Player>> fullChart =
                 depthChartService.getFullDepthChart(league, team);
 
-        return ResponseEntity.ok(fullChart);
+        return ResponseEntity.ok()
+                .header("X-Correlation-Id", correlationId)
+                .body(fullChart);
     }
 }
