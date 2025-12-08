@@ -14,7 +14,6 @@ public class DepthChartServiceImpl implements DepthChartService {
 
     private final LeagueMetadataService leagueMetadataService;
 
-    // League+Team+Position -> ordered depth chart players
     private final Map<DepthChartKey, List<Player>> depthChart = new LinkedHashMap<>();
 
     public DepthChartServiceImpl(LeagueMetadataService leagueMetadataService) {
