@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 
@@ -20,6 +21,7 @@ import java.util.Map;
 @Component
 @RequiredArgsConstructor
 @Slf4j
+@ConditionalOnProperty(name = "depthchart.loader.enabled", havingValue = "true", matchIfMissing = true)
 public class DepthChartDataLoader implements CommandLineRunner {
 
     private final DepthChartService depthChartService;
