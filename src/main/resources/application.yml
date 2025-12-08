@@ -1,3 +1,13 @@
 spring:
   application:
     name: fanduel-depth-chart
+
+league-catalog:
+  leagues:
+    NFL:
+      teams:  ["TB", "NE", "DAL", "KC", "PHI"]
+      positions: ["LWR", "RWR", "QB", "RB", "LT", "LG", "C", "RG", "RT", "WR", "TE", "K", "P"]
+    NBA:
+      teams: [ "DN", "MT", "LAC" ]
+      positions: [ "PG", "SG", "SF", "PF", "C" ]
+

@@ -1,0 +1,96 @@
+{
+  "league": "NFL",
+  "team":"TB",
+  "season":"2022",
+  "positions":{
+    "LWR":[
+      {
+        "number":2, "name":"Egbuka, Emeka 25/1"
+      },
+      {
+        "number":81, "name":"Miller, Ryan CF23"
+      }
+    ],
+    "RWR":[
+      {
+        "number":15, "name":"Johnson, Tez 25/7"
+      },
+      {
+        "number":19, "name":"Johnson, Kameron CF24"
+      }
+    ],
+    "SWR":[
+      {
+        "number":14, "name":"Godwin Jr., Chris 17/3"
+      },
+      {
+        "number":17, "name":"SHEPARD, STERLING U/NYG"
+      }
+    ],
+    "LT":[
+      {
+        "number":78, "name":"Wirfs, Tristan 20/1"
+      },
+      {
+        "number":70, "name":"Chukwuma, Benjamin CF25"
+      }
+    ],
+    "LG":[
+      {
+        "number":68, "name":"Bredeson, Ben U/NYG"
+      },
+      {
+        "number":60, "name":"Jordan, Mike SF25"
+      }
+    ],
+    "C":[
+      {
+        "number":62, "name":"Barton, Graham 24/1"
+      },
+      {
+        "number":79, "name":"Klein, Elijah 24/6"
+      }
+    ],
+    "RG":[
+      {
+        "number":65, "name":"FEENEY, DAN P/Buf"
+      },
+      {
+        "number":72, "name":"Haggard, Luke CF23"
+      }
+    ],
+    "TE" : [
+      {
+        "number":88, "name":"Otton, Cade 22/4"
+      },
+      {
+        "number":87, "name":"Durham, Payne 23/5"
+      },
+      {
+        "number":82, "name":"Culp, Devin 24/7"
+      }
+    ],
+    "QB" : [
+      {
+        "number":6, "name":"MAYFIELD, BAKER U/LAR"
+      },
+      {
+        "number":10, "name":"BRIDGEWATER, TEDDY U/Det"
+      },
+      {
+        "number":16, "name":"Bazelak, Connor CF25"
+      }
+    ],
+    "RB" : [
+      {
+        "number":7, "name":"Irving, Bucky 24/4"
+      },
+      {
+        "number":1, "name":"White, Rachaad 22/3"
+      },
+      {
+        "number":44, "name":"Tucker, Sean CF23"
+      }
+    ]
+  }
+}
