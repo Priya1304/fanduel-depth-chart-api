@@ -29,7 +29,7 @@ The API endpoints are served under the `/api/v1` prefix (e.g. `/api/v1/NFL/teams
 
 ### Example
 - Add player (append): `curl -X POST -H "Content-Type: application/json" -d '{"number":12,"name":"Tom Brady"}' http://localhost:8080/api/v1/NFL/teams/TB/depth-chart/QB`
-- Add at depth 1: `.../depth-chart/QB?position_depth=1`
+- Add at depth 1: `curl -X POST -H "Content-Type: application/json" -d '{"number":81,"name":"Miller, Ryan CF23"}' 'http://localhost:8080/api/v1/NFL/teams/TB/depth-chart/QB?position_depth=1'`
 - Remove: `curl -X DELETE -H "Content-Type: application/json" -d '{"number":12,"name":"Tom Brady"}' http://localhost:8080/api/v1/NFL/teams/TB/depth-chart/QB`
 - Backups: `curl -X POST -H "Content-Type: application/json" -d '{"number":12,"name":"Tom Brady"}' http://localhost:8080/api/v1/NFL/teams/TB/depth-chart/QB/backups`
 - Full chart: `curl http://localhost:8080/api/v1/NFL/teams/TB/depth-chart`
@@ -54,6 +54,7 @@ The API endpoints are served under the `/api/v1` prefix (e.g. `/api/v1/NFL/teams
 
 ## Postman
 - **Collection**: `src/test/resources/postman/DepthChartAPI.postman_collection.json` (kept under test/resources alongside tests).
+- We can import this collection in Postman and run it.
 - We can also run the collection using **Newman**:
 
   #### newman installation:

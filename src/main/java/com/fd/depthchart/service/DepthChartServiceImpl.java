@@ -28,13 +28,14 @@ public class DepthChartServiceImpl implements DepthChartService {
     public synchronized void addPlayerToDepthChart(DepthChartKey key,
                                                    Player player,
                                                    Integer positionDepth) {
-        validatePlayer(player);
         validatePositionDepth(positionDepth);
 
         // Domain validation delegated to metadata service
         leagueMetadataService.validateLeagueTeamPosition(
                 key.league(), key.team(), key.position()
         );
+
+        validatePlayer(player);
 
         // Get or create position depth list
         List<Player> depth = depthChart.computeIfAbsent(key, k -> new ArrayList<>());
