@@ -58,7 +58,7 @@ The API endpoints are served under the `/api/v1` prefix (e.g. `/api/v1/NFL/teams
 
   #### newman installation:
   `npm install -g newman`
-  #### To run the collection:
+  #### To run the collection (from repo root):
   `newman run "src/test/resources/postman/DepthChartAPI.postman_collection.json"`
 
 ## Assumptions & Behavior
