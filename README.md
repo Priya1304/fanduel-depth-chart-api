@@ -3,12 +3,18 @@ A Spring Boot REST API for managing a team’s depth chart — supports adding/r
 
 ## Run
 - Requires JDK 17+.
+- Clone and enter repo: `git clone https://github.com/Priya1304/fanduel-depth-chart-api.git && cd fanduel-depth-chart-api`
 - Start API: `./gradlew bootRun`
-- Base URL: `http://localhost:8080/api/v1`
+
+The API endpoints are served under the `/api/v1` prefix (e.g. `/api/v1/NFL/teams/TB/depth-chart`).
 
 ### Docker
 - Build image: `docker build -t depth-chart .`
 - Run container: `docker run -p 8080:8080 depth-chart`
+
+## API Docs
+- Swagger UI is enabled: `http://localhost:8080/swagger-ui/index.html`
+- OpenAPI JSON: `http://localhost:8080/v3/api-docs`
 
 ## API Reference
 
@@ -55,10 +61,6 @@ A Spring Boot REST API for managing a team’s depth chart — supports adding/r
   #### To run the collection:
   `newman run "src/test/resources/postman/DepthChartAPI.postman_collection.json"`
 
-## API Docs
-- Swagger UI is enabled: `http://localhost:8080/swagger-ui/index.html`
-- OpenAPI JSON: `http://localhost:8080/v3/api-docs`
-
 ## Assumptions & Behavior
 - Player numbers are unique within a team, but a player can still appear at multiple positions.
 - When adding a player with a specific position_depth, players below that depth are shifted down.
@@ -73,6 +75,7 @@ A Spring Boot REST API for managing a team’s depth chart — supports adding/r
 - **Observability**:
   - Correlation ID already logged, we can wire it into MDC so logs for a request share the same ID
   - Add metrics & structured logs
+- **Quality Check**: code coverage rules can be added to enforce minimum test coverage.
 - **Operations**: Add basic authentication and request limits if the API is ever exposed outside the internal network.
 
 ## Data Model, if we persist in database
