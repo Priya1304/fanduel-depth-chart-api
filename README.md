@@ -14,7 +14,7 @@ The API endpoints are served under the `/api/v1` prefix (e.g. `/api/v1/NFL/teams
 
 ## API Docs
 - Swagger UI is enabled: [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
-- OpenAPI JSON: [http://localhost:8080/v3/api-docs](http://localhost:8080/swagger-ui/index.html)
+- OpenAPI JSON: [http://localhost:8080/v3/api-docs](http://localhost:8080/v3/api-docs)
 
 ## API Reference
 
