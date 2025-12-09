@@ -68,20 +68,19 @@ A Spring Boot REST API for managing a team’s depth chart — supports adding/r
 
 ## Production Considerations (next steps)
 - **Persistence**: move in-memory store to Postgres or Redis (in-memory stays as a fast cache)
-- **Change events**: publish roster updates so other services (if any) can react in real-time
+- **Change events**: publish roster updates to Kafka so that downstream services can react in real time.
 - **Resilience**: timeouts + retries + circuit breaker once external services come in
 - **Observability**:
-  - Correlation ID already logged
+  - Correlation ID already logged, we can wire it into MDC so logs for a request share the same ID
   - Add metrics & structured logs
 - **Operations**: Add basic authentication and request limits if the API is ever exposed outside the internal network.
 
 ## Data Model, if we persist in database
-For database, we can use tables like
-- league (id, code, name)
-- team (id, league_id, code, name)
-- position (id, league_id, code, name)
-- player (id, team_id, number, name) — number stays unique per team
-- depth_chart_entry (team_id, position_id, player_id, depth_index, created_at)
+- **league**: (id, code, name) — example, NFL, NBA
+- **team**: (id, league_id FK, code, name) — example, TB for Tampa Bay
+- **position**: (id, league_id FK, code, name) — per sport (QB, RB, LT, etc.)
+- **player**: (id, number, name) — players are team-agnostic
+- **roster**: (id, team_id FK, season, status) — per-season snapshot
+- **depth_chart_entry**: (id, roster_id FK, position_id FK, player_id FK, depth_index, created_at) — ordering per position is kept via depth_index
 
-That mirrors the current model: one team → many positions → ordered players. 
-
+This model supports each team having multiple positions with an ordered depth chart of players.”
